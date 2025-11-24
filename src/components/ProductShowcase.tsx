@@ -4,7 +4,7 @@ import { Shield, Zap, Heart, Activity } from "lucide-react";
 
 const ProductShowcase = () => {
   return (
-    <section className="py-20 relative overflow-hidden">
+    <section id="product" className="py-20 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-background" />
       
       <div className="container mx-auto px-4 relative z-10">
@@ -19,8 +19,9 @@ const ProductShowcase = () => {
           >
             <div className="grid grid-cols-2 gap-4">
               <motion.div
-                whileHover={{ scale: 1.05 }}
-                className="bg-gradient-to-br from-primary/10 to-primary/5 p-6 rounded-2xl border border-primary/20"
+                whileHover={{ scale: 1.05, rotate: -2 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-gradient-to-br from-primary/10 to-primary/5 p-6 rounded-2xl border border-primary/20 hover:shadow-lg hover:shadow-primary/20 transition-shadow"
               >
                 <Shield className="w-12 h-12 text-primary mb-3" />
                 <h4 className="font-heading font-bold mb-1">Protected</h4>
@@ -28,8 +29,9 @@ const ProductShowcase = () => {
               </motion.div>
 
               <motion.div
-                whileHover={{ scale: 1.05 }}
-                className="bg-gradient-to-br from-safety/10 to-safety/5 p-6 rounded-2xl border border-safety/20"
+                whileHover={{ scale: 1.05, rotate: 2 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-gradient-to-br from-safety/10 to-safety/5 p-6 rounded-2xl border border-safety/20 hover:shadow-lg hover:shadow-safety/20 transition-shadow"
               >
                 <Zap className="w-12 h-12 text-safety mb-3" />
                 <h4 className="font-heading font-bold mb-1">Instant</h4>
