@@ -89,15 +89,6 @@ const Waitlist = () => {
             </form>
           </motion.div>
 
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.4 }}
-            className="text-center text-sm text-muted-foreground mt-6"
-          >
-            Built with ❤️ in Sri Ganganagar, Rajasthan
-          </motion.p>
         </motion.div>
       </div>
     </section>

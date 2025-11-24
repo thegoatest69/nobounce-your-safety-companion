@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import heroRing from "@/assets/hero-ring.png";
+import { Shield, Heart, MapPin } from "lucide-react";
 
 const Hero = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -118,7 +118,7 @@ const Hero = () => {
             </motion.p>
           </motion.div>
 
-          {/* Right content - Animated ring with parallax */}
+          {/* Right content - Feature cards with parallax */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -127,33 +127,37 @@ const Hero = () => {
           >
             <motion.div
               animate={{
-                x: mousePosition.x,
-                y: mousePosition.y,
+                x: mousePosition.x * 0.3,
+                y: mousePosition.y * 0.3,
               }}
               transition={{ type: "spring", stiffness: 50, damping: 20 }}
-              className="relative"
+              className="relative w-full max-w-lg"
             >
-              <motion.img
-                src={heroRing}
-                alt="NoBounce Emergency Ring"
-                className="w-full max-w-2xl animate-float"
+              {/* Central ring icon */}
+              <motion.div
                 animate={{
-                  rotateZ: [0, 5, 0, -5, 0],
+                  rotateZ: [0, 360],
                 }}
-                transition={{ duration: 10, repeat: Infinity }}
-              />
+                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                className="mx-auto w-48 h-48 rounded-full bg-gradient-to-br from-primary/20 to-safety/20 flex items-center justify-center backdrop-blur-sm border-4 border-primary/30"
+              >
+                <div className="w-32 h-32 rounded-full bg-gradient-to-br from-primary to-primary-glow flex items-center justify-center shadow-2xl shadow-primary/50">
+                  <Shield className="w-16 h-16 text-primary-foreground" />
+                </div>
+              </motion.div>
               
-              {/* Floating badges */}
+              {/* Floating feature badges */}
               <motion.div
                 animate={{
                   y: [0, -10, 0],
                   x: mousePosition.x * 0.5,
                 }}
                 transition={{ duration: 3, repeat: Infinity }}
-                className="absolute top-10 -left-10 bg-card p-4 rounded-2xl shadow-xl border border-border"
+                className="absolute top-0 left-0 bg-card p-4 rounded-2xl shadow-xl border-2 border-safety/30"
               >
-                <div className="text-2xl">🚨</div>
-                <p className="text-xs font-semibold mt-1">Emergency</p>
+                <Heart className="w-8 h-8 text-safety mb-2" />
+                <p className="text-sm font-semibold">Emergency</p>
+                <p className="text-xs text-muted-foreground">Alert</p>
               </motion.div>
 
               <motion.div
@@ -162,10 +166,11 @@ const Hero = () => {
                   x: mousePosition.x * 0.3,
                 }}
                 transition={{ duration: 4, repeat: Infinity, delay: 1 }}
-                className="absolute bottom-20 -right-10 bg-card p-4 rounded-2xl shadow-xl border border-border"
+                className="absolute bottom-0 right-0 bg-card p-4 rounded-2xl shadow-xl border-2 border-primary/30"
               >
-                <div className="text-2xl">📍</div>
-                <p className="text-xs font-semibold mt-1">Live Location</p>
+                <MapPin className="w-8 h-8 text-primary mb-2" />
+                <p className="text-sm font-semibold">Live</p>
+                <p className="text-xs text-muted-foreground">Location</p>
               </motion.div>
 
               <motion.div
@@ -174,15 +179,16 @@ const Hero = () => {
                   x: mousePosition.x * 0.4,
                 }}
                 transition={{ duration: 3.5, repeat: Infinity, delay: 0.5 }}
-                className="absolute top-1/2 -right-20 bg-card p-4 rounded-2xl shadow-xl border border-border"
+                className="absolute top-1/3 -right-4 bg-card p-4 rounded-2xl shadow-xl border-2 border-primary/30"
               >
-                <div className="text-2xl">🤖</div>
-                <p className="text-xs font-semibold mt-1">AI Powered</p>
+                <div className="text-3xl mb-1">🤖</div>
+                <p className="text-sm font-semibold">AI</p>
+                <p className="text-xs text-muted-foreground">Powered</p>
               </motion.div>
             </motion.div>
 
-            {/* Glow effect */}
-            <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-safety/20 blur-3xl opacity-50 animate-pulse-glow" />
+            {/* Subtle glow effect */}
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-safety/10 blur-3xl opacity-40" />
           </motion.div>
         </div>
       </div>
