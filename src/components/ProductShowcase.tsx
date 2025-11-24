@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import ringProduct from "@/assets/ring-product.png";
+import { Shield, Zap, Heart, Activity } from "lucide-react";
 
 const ProductShowcase = () => {
   return (
@@ -9,7 +9,7 @@ const ProductShowcase = () => {
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
-          {/* Product image */}
+          {/* Feature grid */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9, x: -50 }}
             whileInView={{ opacity: 1, scale: 1, x: 0 }}
@@ -17,22 +17,43 @@ const ProductShowcase = () => {
             transition={{ duration: 0.8 }}
             className="relative"
           >
-            <motion.div
-              animate={{
-                y: [0, -20, 0],
-              }}
-              transition={{ duration: 6, repeat: Infinity }}
-              className="relative"
-            >
-              <img
-                src={ringProduct}
-                alt="NoBounce Smart Ring"
-                className="w-full max-w-lg mx-auto rounded-3xl shadow-2xl"
-              />
-              
-              {/* Glow effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-primary/30 to-safety/30 blur-3xl rounded-3xl" />
-            </motion.div>
+            <div className="grid grid-cols-2 gap-4">
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                className="bg-gradient-to-br from-primary/10 to-primary/5 p-6 rounded-2xl border border-primary/20"
+              >
+                <Shield className="w-12 h-12 text-primary mb-3" />
+                <h4 className="font-heading font-bold mb-1">Protected</h4>
+                <p className="text-sm text-muted-foreground">24/7 Safety</p>
+              </motion.div>
+
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                className="bg-gradient-to-br from-safety/10 to-safety/5 p-6 rounded-2xl border border-safety/20"
+              >
+                <Zap className="w-12 h-12 text-safety mb-3" />
+                <h4 className="font-heading font-bold mb-1">Instant</h4>
+                <p className="text-sm text-muted-foreground">Fast Response</p>
+              </motion.div>
+
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                className="bg-gradient-to-br from-safety/10 to-safety/5 p-6 rounded-2xl border border-safety/20"
+              >
+                <Heart className="w-12 h-12 text-safety mb-3" />
+                <h4 className="font-heading font-bold mb-1">Reliable</h4>
+                <p className="text-sm text-muted-foreground">Always On</p>
+              </motion.div>
+
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                className="bg-gradient-to-br from-primary/10 to-primary/5 p-6 rounded-2xl border border-primary/20"
+              >
+                <Activity className="w-12 h-12 text-primary mb-3" />
+                <h4 className="font-heading font-bold mb-1">Smart</h4>
+                <p className="text-sm text-muted-foreground">AI Detection</p>
+              </motion.div>
+            </div>
           </motion.div>
 
           {/* Content */}
