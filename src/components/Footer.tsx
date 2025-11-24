@@ -2,18 +2,19 @@ import { motion } from "framer-motion";
 
 const Footer = () => {
   const quickLinks = [
-    { name: "Home", href: "#" },
+    { name: "Home", href: "#home" },
     { name: "The Problem", href: "#problem" },
     { name: "Why NoBounce", href: "#why" },
-    { name: "Resources", href: "#" },
-    { name: "Documentation", href: "#" },
-    { name: "Contact Us", href: "#" },
+    { name: "How It Works", href: "#how-it-works" },
+    { name: "Product", href: "#product" },
+    { name: "Roadmap", href: "#roadmap" },
+    { name: "Join Waitlist", href: "#waitlist" },
   ];
 
   return (
     <footer className="bg-card border-t border-border py-12">
       <div className="container mx-auto px-4">
-        <div className="grid md:grid-cols-3 gap-8 mb-8">
+        <div className="grid md:grid-cols-2 gap-12 mb-8">
           {/* Brand */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -22,8 +23,8 @@ const Footer = () => {
             className="space-y-4"
           >
             <h3 className="text-2xl font-heading font-bold text-gradient">NoBounce</h3>
-            <p className="text-muted-foreground">
-              Your safety companion for any situation. Always within reach.
+            <p className="text-muted-foreground max-w-md">
+              Your safety companion for any situation. Always within reach. Autonomous emergency ring that ensures help is always available, even without a mobile phone.
             </p>
           </motion.div>
 
@@ -35,40 +36,31 @@ const Footer = () => {
             transition={{ delay: 0.1 }}
           >
             <h4 className="font-heading font-bold mb-4">Quick Links</h4>
-            <ul className="space-y-2">
-              {quickLinks.map((link) => (
-                <li key={link.name}>
+            <ul className="grid grid-cols-2 gap-3">
+              {quickLinks.map((link, index) => (
+                <motion.li 
+                  key={link.name}
+                  initial={{ opacity: 0, x: -10 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.1 + index * 0.05 }}
+                >
                   <a
                     href={link.href}
-                    className="text-muted-foreground hover:text-primary transition-colors duration-200"
+                    className="text-muted-foreground hover:text-primary transition-colors duration-200 inline-flex items-center group"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const target = document.querySelector(link.href);
+                      if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                      }
+                    }}
                   >
-                    {link.name}
+                    <span className="group-hover:translate-x-1 transition-transform duration-200">{link.name}</span>
                   </a>
-                </li>
+                </motion.li>
               ))}
             </ul>
-          </motion.div>
-
-          {/* Follow Us */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-          >
-            <h4 className="font-heading font-bold mb-4">Follow Us</h4>
-            <div className="flex gap-4">
-              {["Twitter", "LinkedIn", "Instagram"].map((social) => (
-                <motion.a
-                  key={social}
-                  href="#"
-                  whileHover={{ scale: 1.1, y: -2 }}
-                  className="w-10 h-10 rounded-full bg-primary/10 hover:bg-primary hover:text-primary-foreground flex items-center justify-center transition-all duration-300"
-                >
-                  {social[0]}
-                </motion.a>
-              ))}
-            </div>
           </motion.div>
         </div>
 

@@ -24,7 +24,7 @@ const problems = [
 
 const Problem = () => {
   return (
-    <section className="py-20 bg-muted/30">
+    <section id="problem" className="py-20 bg-muted/30">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -47,8 +47,8 @@ const Problem = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              whileHover={{ y: -8, transition: { duration: 0.2 } }}
-              className="bg-card rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-border"
+              whileHover={{ y: -8, scale: 1.02, transition: { duration: 0.2 } }}
+              className="bg-card rounded-2xl p-8 shadow-lg hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 border border-border"
             >
               <motion.div
                 whileHover={{ scale: 1.1, rotate: 5 }}

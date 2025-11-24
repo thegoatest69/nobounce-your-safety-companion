@@ -24,7 +24,7 @@ const steps = [
 
 const HowItWorks = () => {
   return (
-    <section className="py-20 bg-gradient-to-b from-background to-primary/5">
+    <section id="how-it-works" className="py-20 bg-gradient-to-b from-background to-primary/5">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -54,8 +54,8 @@ const HowItWorks = () => {
                 className="relative"
               >
                 <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  className="bg-card rounded-3xl p-8 shadow-xl border-2 border-primary/20 hover:border-primary/50 transition-all duration-300"
+                  whileHover={{ scale: 1.05, rotate: [0, -1, 1, 0] }}
+                  className="bg-card rounded-3xl p-8 shadow-xl border-2 border-primary/20 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/20 transition-all duration-300"
                 >
                   {/* Step number */}
                   <div className="absolute -top-4 -right-4 w-12 h-12 bg-gradient-to-br from-safety to-safety-glow rounded-full flex items-center justify-center text-safety-foreground font-bold shadow-lg">

@@ -5,6 +5,8 @@ import { Shield, Heart, MapPin } from "lucide-react";
 
 const Hero = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [currentWord, setCurrentWord] = useState(0);
+  const words = ["Elders", "Indians", "Women", "Everyone"];
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -18,8 +20,15 @@ const Hero = () => {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentWord((prev) => (prev + 1) % words.length);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-background via-background to-primary/5">
+    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-background via-background to-primary/5">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
@@ -53,9 +62,21 @@ const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="inline-block mb-4 px-4 py-2 bg-primary/10 rounded-full text-sm font-medium text-primary"
+              className="inline-block mb-4 px-4 py-2 bg-primary/10 rounded-full text-sm font-medium text-primary overflow-hidden"
             >
-              Safety-First For Elders • Indians • Women • Everyone
+              <span className="inline-flex items-center gap-2">
+                Safety-First For{" "}
+                <motion.span
+                  key={currentWord}
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: -20, opacity: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className="inline-block font-bold min-w-[100px] text-center"
+                >
+                  {words[currentWord]}
+                </motion.span>
+              </span>
             </motion.div>
 
             <motion.h1
@@ -86,26 +107,30 @@ const Hero = () => {
               transition={{ delay: 0.5 }}
               className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
             >
-              <Button
-                size="lg"
-                className="group relative overflow-hidden bg-gradient-to-r from-primary to-primary-glow hover:shadow-lg hover:shadow-primary/50 transition-all duration-300 hover:scale-105"
-              >
-                <span className="relative z-10">Join Waitlist</span>
-                <motion.div
-                  className="absolute inset-0 bg-primary-dark"
-                  initial={{ x: "-100%" }}
-                  whileHover={{ x: 0 }}
-                  transition={{ duration: 0.3 }}
-                />
-              </Button>
+              <a href="#waitlist">
+                <Button
+                  size="lg"
+                  className="group relative overflow-hidden bg-gradient-to-r from-primary to-primary-glow hover:shadow-lg hover:shadow-primary/50 transition-all duration-300 hover:scale-105"
+                >
+                  <span className="relative z-10">Join Waitlist</span>
+                  <motion.div
+                    className="absolute inset-0 bg-primary-dark"
+                    initial={{ x: "-100%" }}
+                    whileHover={{ x: 0 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                </Button>
+              </a>
 
-              <Button
-                size="lg"
-                variant="outline"
-                className="group border-2 border-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300"
-              >
-                Learn More
-              </Button>
+              <a href="#problem">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="group border-2 border-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+                >
+                  Learn More
+                </Button>
+              </a>
             </motion.div>
 
             <motion.p

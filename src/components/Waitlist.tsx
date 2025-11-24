@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 
 const Waitlist = () => {
   return (
-    <section className="py-20 relative overflow-hidden">
+    <section id="waitlist" className="py-20 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-primary/10 via-background to-safety/10" />
       
       <div className="container mx-auto px-4 relative z-10">

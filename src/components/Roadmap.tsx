@@ -34,7 +34,7 @@ const phases = [
 
 const Roadmap = () => {
   return (
-    <section className="py-20 bg-muted/30">
+    <section id="roadmap" className="py-20 bg-muted/30">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -68,10 +68,10 @@ const Roadmap = () => {
                 {/* Content card */}
                 <div className="flex-1">
                   <motion.div
-                    whileHover={{ scale: 1.02, y: -4 }}
+                    whileHover={{ scale: 1.02, y: -4, rotate: index % 2 === 0 ? -1 : 1 }}
                     className={`bg-card rounded-2xl p-6 shadow-lg border-2 ${
                       phase.completed ? "border-primary" : "border-border"
-                    } hover:border-primary/50 transition-all duration-300`}
+                    } hover:border-primary/50 hover:shadow-xl transition-all duration-300`}
                   >
                     <div className="flex items-start justify-between mb-4">
                       <div>

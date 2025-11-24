@@ -26,7 +26,7 @@ const features = [
 
 const WhyNoBounce = () => {
   return (
-    <section className="py-20 relative overflow-hidden">
+    <section id="why" className="py-20 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-safety/5 rounded-full blur-3xl" />
@@ -59,7 +59,7 @@ const WhyNoBounce = () => {
             >
               <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-safety/10 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               
-              <div className="relative bg-card rounded-3xl p-8 shadow-lg border border-border hover:border-primary/50 transition-all duration-300">
+              <div className="relative bg-card rounded-3xl p-8 shadow-lg border border-border hover:border-primary/50 hover:shadow-2xl transition-all duration-300">
                 <motion.div
                   whileHover={{ rotate: 360, scale: 1.1 }}
                   transition={{ duration: 0.5 }}
