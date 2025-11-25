@@ -34,17 +34,17 @@ const phases = [
 
 const Roadmap = () => {
   return (
-    <section id="roadmap" className="py-20 bg-muted/30">
+    <section id="roadmap" className="py-12 md:py-20 bg-gradient-to-b from-background to-primary/5 relative overflow-hidden">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-8 md:mb-16"
         >
-          <h2 className="text-4xl lg:text-5xl font-heading font-bold mb-6">Our Roadmap</h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold mb-4 md:mb-6 px-4">Our Roadmap</h2>
+          <p className="text-base md:text-xl text-muted-foreground max-w-3xl mx-auto px-4">
             Here's what we've accomplished and where we're headed on our mission to deliver NoBounce
           </p>
         </motion.div>
@@ -53,7 +53,7 @@ const Roadmap = () => {
           {/* Timeline line */}
           <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-primary via-safety to-primary transform -translate-x-1/2" />
 
-          <div className="space-y-12">
+          <div className="space-y-8 md:space-y-12">
             {phases.map((phase, index) => (
               <motion.div
                 key={phase.phase}
@@ -63,23 +63,24 @@ const Roadmap = () => {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 className={`relative flex items-center ${
                   index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
-                } gap-8`}
+                } gap-4 md:gap-8`}
               >
                 {/* Content card */}
                 <div className="flex-1">
                   <motion.div
                     whileHover={{ scale: 1.02, y: -4, rotate: index % 2 === 0 ? -1 : 1 }}
-                    className={`bg-card rounded-2xl p-6 shadow-lg border-2 ${
+                    whileTap={{ scale: 0.98 }}
+                    className={`bg-card rounded-xl md:rounded-2xl p-5 md:p-6 shadow-lg border-2 ${
                       phase.completed ? "border-primary" : "border-border"
-                    } hover:border-primary/50 hover:shadow-xl transition-all duration-300`}
+                    } hover:border-primary/50 active:border-primary/50 hover:shadow-xl transition-all duration-300`}
                   >
-                    <div className="flex items-start justify-between mb-4">
+                    <div className="flex items-start justify-between mb-3 md:mb-4">
                       <div>
-                        <h3 className="text-sm font-semibold text-primary mb-1">{phase.phase}</h3>
-                        <h4 className="text-xl font-heading font-bold">{phase.title}</h4>
+                        <h3 className="text-xs md:text-sm font-semibold text-primary mb-1">{phase.phase}</h3>
+                        <h4 className="text-lg md:text-xl font-heading font-bold">{phase.title}</h4>
                       </div>
                       <span
-                        className={`text-xs font-semibold px-3 py-1 rounded-full ${
+                        className={`text-[10px] md:text-xs font-semibold px-2 md:px-3 py-1 rounded-full ${
                           phase.completed
                             ? "bg-primary/20 text-primary"
                             : "bg-muted text-muted-foreground"
@@ -88,7 +89,7 @@ const Roadmap = () => {
                         {phase.status}
                       </span>
                     </div>
-                    <p className="text-muted-foreground">{phase.description}</p>
+                    <p className="text-sm md:text-base text-muted-foreground">{phase.description}</p>
                   </motion.div>
                 </div>
 
