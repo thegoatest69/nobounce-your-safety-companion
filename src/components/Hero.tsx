@@ -6,6 +6,7 @@ import { Shield, Heart, MapPin } from "lucide-react";
 const Hero = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [currentWord, setCurrentWord] = useState(0);
+  const [isExpanded, setIsExpanded] = useState(false);
   const words = ["Elders", "Indians", "Women", "Everyone"];
 
   useEffect(() => {
@@ -79,18 +80,110 @@ const Hero = () => {
               </span>
             </motion.div>
 
-            <motion.h1
+            {/* Expandable NoBounce Card */}
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="text-4xl md:text-5xl lg:text-7xl font-heading font-bold mb-4 md:mb-6 leading-tight"
+              className="mb-4 md:mb-6"
             >
-              <span className="text-gradient">NoBounce</span>
-              <br />
-              Your Guardian
-              <br />
-              On Finger
-            </motion.h1>
+              <motion.div
+                animate={{
+                  width: isExpanded ? "100%" : "auto",
+                }}
+                transition={{ duration: 0.5, delay: isExpanded ? 0 : 0.2 }}
+                onHoverStart={() => setIsExpanded(true)}
+                onHoverEnd={() => setIsExpanded(false)}
+                onClick={() => setIsExpanded(!isExpanded)}
+                className="relative inline-block cursor-pointer max-w-full"
+              >
+                {/* Glowing circle background */}
+                <motion.div
+                  animate={{
+                    scale: isExpanded ? [1, 1.5] : 1,
+                    borderRadius: isExpanded ? "24px" : "50%",
+                    width: isExpanded ? "100%" : "200px",
+                    height: isExpanded ? "auto" : "200px",
+                  }}
+                  transition={{ duration: 0.5 }}
+                  className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary-glow/20 border-4 border-primary/30"
+                  style={{
+                    filter: "drop-shadow(0 0 20px hsl(var(--primary)))",
+                  }}
+                />
+
+                <div className="relative bg-card/50 backdrop-blur-sm rounded-3xl p-4 md:p-6 overflow-hidden">
+                  {/* Logo/Brand - scales down when expanded */}
+                  <motion.div
+                    animate={{
+                      scale: isExpanded ? 0 : 1,
+                      opacity: isExpanded ? 0 : 1,
+                    }}
+                    transition={{ duration: 0.3, delay: isExpanded ? 0 : 0.3 }}
+                    className="text-center"
+                  >
+                    <h1 className="text-4xl md:text-5xl lg:text-7xl font-heading font-bold text-gradient whitespace-nowrap">
+                      NoBounce
+                    </h1>
+                  </motion.div>
+
+                  {/* Expanded content */}
+                  <motion.div
+                    animate={{
+                      opacity: isExpanded ? 1 : 0,
+                      visibility: isExpanded ? "visible" : "hidden",
+                      x: isExpanded ? 0 : -50,
+                    }}
+                    transition={{ duration: 0.5, delay: isExpanded ? 0.4 : 0 }}
+                    className="space-y-3"
+                  >
+                    <h1 className="text-3xl md:text-4xl lg:text-6xl font-heading font-bold text-gradient">
+                      NoBounce
+                    </h1>
+                    <p className="text-sm md:text-base text-foreground/90">
+                      Your Guardian On Finger
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      <span className="px-3 py-1 bg-primary/20 rounded-full text-xs font-medium text-primary">
+                        AI-Powered
+                      </span>
+                      <span className="px-3 py-1 bg-safety/20 rounded-full text-xs font-medium text-safety">
+                        24/7 Safety
+                      </span>
+                      <span className="px-3 py-1 bg-primary/20 rounded-full text-xs font-medium text-primary">
+                        Autonomous
+                      </span>
+                    </div>
+                    <p className="text-xs md:text-sm text-muted-foreground">
+                      Emergency detection ring that works without a phone. Tap to explore →
+                    </p>
+                  </motion.div>
+
+                  {/* Ring icon that appears on expand */}
+                  <motion.div
+                    animate={{
+                      scale: isExpanded ? 1 : 0,
+                      rotate: isExpanded ? 15 : 315,
+                      x: isExpanded ? 0 : -50,
+                      y: isExpanded ? 0 : -50,
+                    }}
+                    transition={{ duration: 0.5, delay: isExpanded ? 0.5 : 0 }}
+                    className="absolute bottom-4 right-4 md:bottom-6 md:right-6"
+                  >
+                    <Shield className="w-16 h-16 md:w-20 md:h-20 text-primary/40" />
+                  </motion.div>
+                </div>
+              </motion.div>
+            </motion.div>
+
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.35 }}
+              className="text-2xl md:text-3xl lg:text-4xl font-heading font-semibold mb-4 md:mb-6 leading-tight"
+            >
+              Your Guardian On Finger
+            </motion.h2>
 
             <motion.p
               initial={{ opacity: 0, y: 20 }}
