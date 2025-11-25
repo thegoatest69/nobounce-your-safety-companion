@@ -33,8 +33,8 @@ const Problem = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-8 md:mb-16"
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold mb-4 md:mb-6 px-4">The Problem</h2>
-          <p className="text-base md:text-xl text-muted-foreground max-w-3xl mx-auto px-4">
+          <h2 className="text-2xl md:text-4xl lg:text-5xl font-heading font-bold mb-4 md:mb-6 px-4">The Problem</h2>
+          <p className="text-sm md:text-base lg:text-lg text-muted-foreground max-w-3xl mx-auto px-4">
             Every day, <span className="text-safety font-bold">24,000 people die in India</span> due to late medical response. Moreover,
           </p>
         </motion.div>
@@ -49,17 +49,17 @@ const Problem = () => {
               transition={{ duration: 0.6, delay: index * 0.1 }}
               whileHover={{ y: -8, scale: 1.02, transition: { duration: 0.2 } }}
               whileTap={{ scale: 0.98 }}
-              className="bg-card rounded-2xl p-6 md:p-8 shadow-lg hover:shadow-2xl active:shadow-2xl hover:shadow-primary/10 transition-all duration-300 border border-border"
+              className="bg-card rounded-xl md:rounded-2xl p-6 md:p-8 shadow-lg hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 border border-border"
             >
               <motion.div
                 whileHover={{ scale: 1.1, rotate: 5 }}
-                className={`w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-${problem.color}/10 flex items-center justify-center mb-4 md:mb-6`}
+                className={`w-12 h-12 md:w-16 md:h-16 rounded-2xl bg-${problem.color}/10 flex items-center justify-center mb-4 md:mb-6`}
               >
-                <problem.icon className={`w-7 h-7 md:w-8 md:h-8 text-${problem.color}`} />
+                <problem.icon className={`w-6 h-6 md:w-8 md:h-8 text-${problem.color}`} />
               </motion.div>
-              
-              <h3 className="text-xl md:text-2xl font-heading font-bold mb-3 md:mb-4">{problem.title}</h3>
-              <p className="text-sm md:text-base text-muted-foreground leading-relaxed">{problem.description}</p>
+
+              <h3 className="text-lg md:text-2xl font-heading font-bold mb-3 md:mb-4">{problem.title}</h3>
+              <p className="text-xs md:text-base text-muted-foreground leading-relaxed">{problem.description}</p>
             </motion.div>
           ))}
         </div>
