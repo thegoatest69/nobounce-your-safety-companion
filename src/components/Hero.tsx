@@ -97,7 +97,7 @@ const Hero = () => {
                 onClick={() => setIsExpanded(!isExpanded)}
                 className="relative inline-block cursor-pointer max-w-full"
               >
-                <div className="relative bg-card/50 backdrop-blur-sm rounded-3xl p-4 md:p-6 overflow-hidden">
+                <div className="relative bg-card/50 backdrop-blur-sm rounded-3xl p-4 md:p-6 overflow-hidden border border-primary">
                   {/* Logo/Brand - scales down when expanded */}
                   <motion.div
                     animate={{
