@@ -97,21 +97,6 @@ const Hero = () => {
                 onClick={() => setIsExpanded(!isExpanded)}
                 className="relative inline-block cursor-pointer max-w-full"
               >
-                {/* Glowing circle background */}
-                <motion.div
-                  animate={{
-                    scale: isExpanded ? [1, 1.5] : 1,
-                    borderRadius: isExpanded ? "24px" : "50%",
-                    width: isExpanded ? "100%" : "200px",
-                    height: isExpanded ? "auto" : "200px",
-                  }}
-                  transition={{ duration: 0.5 }}
-                  className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary-glow/20 border-4 border-primary/30"
-                  style={{
-                    filter: "drop-shadow(0 0 20px hsl(var(--primary)))",
-                  }}
-                />
-
                 <div className="relative bg-card/50 backdrop-blur-sm rounded-3xl p-4 md:p-6 overflow-hidden">
                   {/* Logo/Brand - scales down when expanded */}
                   <motion.div
