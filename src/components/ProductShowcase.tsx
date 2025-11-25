@@ -4,7 +4,7 @@ import { Shield, Zap, Heart, Activity } from "lucide-react";
 
 const ProductShowcase = () => {
   return (
-    <section id="product" className="py-20 relative overflow-hidden">
+    <section id="product" className="py-12 md:py-20 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-background" />
       
       <div className="container mx-auto px-4 relative z-10">
