@@ -89,8 +89,19 @@ const Hero = ({ onDiscover }: { onDiscover: () => void }) => {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.3 }}
-              className="flex items-center justify-center"
+              className="flex flex-col items-center justify-center gap-4 md:gap-6"
             >
+              <motion.p
+                animate={{ 
+                  opacity: isExpanded ? 0 : 1,
+                  y: isExpanded ? -20 : 0
+                }}
+                transition={{ duration: 0.3 }}
+                className="text-sm md:text-lg font-medium text-foreground/70"
+              >
+                Tap to Explore
+              </motion.p>
+              
               <motion.div
                 animate={{ 
                   width: isExpanded ? (isMobile ? "90vw" : "600px") : (isMobile ? "200px" : "250px"),
