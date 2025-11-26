@@ -108,8 +108,6 @@ const Hero = ({ onDiscover }: { onDiscover: () => void }) => {
                   borderRadius: isExpanded ? "24px" : "50%"
                 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
-                onHoverStart() => !isMobile && (setIsExpandesetTimeout(() => { onDiscover(); window.scrollBy({ top: window.innerHeight, behavior: 'smooth' }); }, 800)
-                onHoverEnd={() => !isMobile && setIsExpanded(false)}
                 onClick={() => {
                   if (isMobile) {
                     setIsExpanded(true);
