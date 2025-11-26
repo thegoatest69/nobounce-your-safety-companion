@@ -57,8 +57,7 @@ const Hero = ({ onDiscover }: { onDiscover: () => void }) => {
       </div>
 
       <div className="container mx-auto px-4 relative z-10 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12 items-center">
-          <motion.div
+            <div className="grid grid-cols-1 gap-6 md:gap-12 items-center justify-center">          <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
