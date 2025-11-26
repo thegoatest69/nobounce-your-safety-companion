@@ -108,7 +108,7 @@ const Hero = ({ onDiscover }: { onDiscover: () => void }) => {
                   borderRadius: isExpanded ? "24px" : "50%"
                 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
-                onHoverStart={() => !isMobile && setIsExpanded(true)}
+                onHoverStart={() => !true)}
                 onHoverEnd={() => !isMobile && setIsExpanded(false)}
                 onClick={() => {
                   if (isMobile) {
