@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Shield, Heart, MapPin } from "lucide-react";
 
-const Hero = () => {
+const Hero = ({ onDiscover }: { onDiscover: () => void }) => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [currentWord, setCurrentWord] = useState(0);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -86,165 +86,97 @@ const Hero = () => {
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.3 }}
-              className="mb-4 md:mb-6"
+              className="flex items-center justify-center"
             >
               <motion.div
-                animate={{ width: isExpanded ? "100%" : "auto" }}
-                transition={{ duration: 0.5 }}
+                animate={{ 
+                  width: isExpanded ? (isMobile ? "90vw" : "600px") : (isMobile ? "200px" : "250px"),
+                  height: isExpanded ? (isMobile ? "auto" : "350px") : (isMobile ? "200px" : "250px"),
+                  borderRadius: isExpanded ? "24px" : "50%"
+                }}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
                 onHoverStart={() => !isMobile && setIsExpanded(true)}
                 onHoverEnd={() => !isMobile && setIsExpanded(false)}
                 onClick={() => isMobile && setIsExpanded(!isExpanded)}
-                className="relative inline-block cursor-pointer w-full md:w-auto"
+                className="relative bg-gradient-to-br from-primary/20 to-safety/20 backdrop-blur-sm border-4 border-primary/30 cursor-pointer flex items-center justify-center shadow-2xl shadow-primary/50 p-6 md:p-8"
               >
-                <div className="relative bg-card/50 backdrop-blur-sm rounded-2xl md:rounded-3xl p-3 md:p-6 overflow-hidden border border-primary">
-                  <motion.div
-                    animate={{ scale: isExpanded ? 0 : 1, opacity: isExpanded ? 0 : 1 }}
-                    transition={{ duration: 0.3 }}
-                    className="text-center"
-                  >
-                    <h1 className="text-3xl md:text-5xl lg:text-7xl font-heading font-bold text-gradient">
-                      NoBounce
-                    </h1>
-                  </motion.div>
-
-                  <motion.div
-                    animate={{
-                      opacity: isExpanded ? 1 : 0,
-                      visibility: isExpanded ? "visible" : "hidden",
-                    }}
-                    transition={{ duration: 0.5 }}
-                    className="space-y-3"
-                  >
-                    <h1 className="text-2xl md:text-4xl lg:text-6xl font-heading font-bold text-gradient">
-                      NoBounce
-                    </h1>
-                    <p className="text-xs md:text-base text-foreground/90">Your Guardian On Finger</p>
-                    <div className="flex flex-wrap gap-2">
-                      <span className="px-2 md:px-3 py-1 bg-primary/20 rounded-full text-xs font-medium text-primary">
-                        AI-Powered
-                      </span>
-                      <span className="px-2 md:px-3 py-1 bg-safety/20 rounded-full text-xs font-medium text-safety">
-                        24/7 Safety
-                      </span>
+                <motion.div
+                  animate={{ scale: isExpanded ? 0 : 1, opacity: isExpanded ? 0 : 1 }}
+                  transition={{ duration: 0.3 }}
+                  className="absolute"
+                >
+                  <div className="flex flex-col items-center justify-center gap-3">
+                    <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-gradient-to-br from-primary to-primary-glow flex items-center justify-center">
+                      <Shield className="w-10 h-10 md:w-12 md:h-12 text-primary-foreground" />
                     </div>
-                  </motion.div>
+                    <h1 className="text-2xl md:text-3xl font-heading font-bold text-gradient text-center">
+                      NoBounce
+                    </h1>
+                  </div>
+                </motion.div>
 
-                  <motion.div
-                    animate={{
-                      scale: isExpanded ? 1 : 0,
-                      rotate: isExpanded ? 15 : 315,
-                    }}
-                    transition={{ duration: 0.5 }}
-                    className="absolute bottom-3 right-3 md:bottom-6 md:right-6"
-                  >
-                    <Shield className="w-12 h-12 md:w-20 md:h-20 text-primary/40" />
-                  </motion.div>
-                </div>
-              </motion.div>
-            </motion.div>
+                <motion.div
+                  animate={{
+                    opacity: isExpanded ? 1 : 0,
+                    visibility: isExpanded ? "visible" : "hidden",
+                    scale: isExpanded ? 1 : 0.8
+                  }}
+                  transition={{ duration: 0.5, delay: isExpanded ? 0.2 : 0 }}
+                  className="w-full space-y-4 md:space-y-6"
+                >
+                  <div className="text-center space-y-3">
+                    <h1 className="text-3xl md:text-5xl font-heading font-bold text-gradient">
+                      NoBounce
+                    </h1>
+                    <p className="text-sm md:text-lg text-foreground/90 font-medium">Your Guardian On Finger</p>
+                    <p className="text-xs md:text-sm text-muted-foreground">
+                      The Autonomous Emergency Ring that ensures help is always within reach, even without a mobile phone.
+                    </p>
+                  </div>
 
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.35 }}
-              className="text-xl md:text-3xl lg:text-4xl font-heading font-semibold mb-4 md:mb-6"
-            >
-              Your Guardian On Finger
-            </motion.h2>
+                  <div className="flex flex-wrap gap-2 justify-center">
+                    <span className="px-3 py-1.5 bg-primary/20 rounded-full text-xs font-medium text-primary">
+                      AI-Powered
+                    </span>
+                    <span className="px-3 py-1.5 bg-safety/20 rounded-full text-xs font-medium text-safety">
+                      24/7 Safety
+                    </span>
+                    <span className="px-3 py-1.5 bg-primary/10 rounded-full text-xs font-medium">
+                      No Phone Needed
+                    </span>
+                  </div>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-              className="text-sm md:text-base lg:text-lg text-muted-foreground mb-6 md:mb-8"
-            >
-              The Autonomous Emergency Ring that ensures help is always within reach, even without a mobile phone.
-            </motion.p>
+                  <div className="flex justify-center pt-2">
+                    <Button 
+                      size="lg" 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onDiscover();
+                      }}
+                      className="bg-gradient-to-r from-primary to-primary-glow hover:shadow-lg hover:shadow-primary/50 px-8"
+                    >
+                      Discover
+                    </Button>
+                  </div>
+                </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-              className="flex flex-col sm:flex-row gap-3 md:gap-4"
-            >
-              <a href="#waitlist" className="w-full sm:w-auto">
-                <Button size="lg" className="w-full bg-gradient-to-r from-primary to-primary-glow hover:shadow-lg hover:shadow-primary/50">
-                  Join Waitlist
-                </Button>
-              </a>
-              <a href="#problem" className="w-full sm:w-auto">
-                <Button size="lg" variant="outline" className="w-full border-2 border-primary">
-                  Learn More
-                </Button>
-              </a>
-            </motion.div>
-
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.6 }}
-              className="mt-4 md:mt-6 text-xs md:text-sm text-muted-foreground"
-            >
-              An Idea by Students 🎓
-            </motion.p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="hidden lg:flex relative items-center justify-center mt-8 lg:mt-0 px-4 md:px-0"
-          >
-            <motion.div
-              animate={{
-                x: isMobile ? 0 : mousePosition.x * 0.3,
-                y: isMobile ? 0 : mousePosition.y * 0.3,
-              }}
-              transition={{ type: "spring", stiffness: 50, damping: 20 }}
-              className="relative w-full max-w-sm md:max-w-lg"
-            >
-              <motion.div
-                animate={{
-                  rotateZ: [0, 360],
-                }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                className="mx-auto w-36 h-36 md:w-48 md:h-48 rounded-full bg-gradient-to-br from-primary/20 to-safety/20 flex items-center justify-center backdrop-blur-sm border-4 border-primary/30"
-              >
-                <div className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-gradient-to-br from-primary to-primary-glow flex items-center justify-center shadow-2xl shadow-primary/50">
-                  <Shield className="w-12 h-12 md:w-16 md:h-16 text-primary-foreground" />
-                </div>
-              </motion.div>
-
-              <motion.div
-                animate={{
-                  y: [0, -10, 0],
-                  x: mousePosition.x * 0.5,
-                }}
-                transition={{ duration: 3, repeat: Infinity }}
-                className="absolute top-0 left-0 bg-card p-3 md:p-4 rounded-xl md:rounded-2xl shadow-xl border-2 border-safety/30"
-              >
-                <Heart className="w-6 h-6 md:w-8 md:h-8 text-safety mb-1 md:mb-2" />
-                <p className="text-xs md:text-sm font-semibold">Emergency</p>
-                <p className="text-[10px] md:text-xs text-muted-foreground">Alert</p>
-              </motion.div>
-
-              <motion.div
-                animate={{
-                  y: [0, 10, 0],
-                  x: mousePosition.x * 0.3,
-                }}
-                transition={{ duration: 4, repeat: Infinity, delay: 1 }}
-                className="absolute bottom-0 right-0 bg-card p-3 md:p-4 rounded-xl md:rounded-2xl shadow-xl border-2 border-primary/30"
-              >
-                <MapPin className="w-6 h-6 md:w-8 md:h-8 text-primary mb-1 md:mb-2" />
-                <p className="text-xs md:text-sm font-semibold">Live</p>
-                <p className="text-[10px] md:text-xs text-muted-foreground">Location</p>
+                <motion.div
+                  animate={{
+                    scale: isExpanded ? 1 : 0,
+                    rotate: isExpanded ? 15 : 315,
+                  }}
+                  transition={{ duration: 0.5 }}
+                  className="absolute bottom-4 right-4 md:bottom-6 md:right-6"
+                >
+                  <Shield className="w-12 h-12 md:w-16 md:h-16 text-primary/40" />
+                </motion.div>
               </motion.div>
             </motion.div>
           </motion.div>
+
         </div>
       </div>
     </section>
