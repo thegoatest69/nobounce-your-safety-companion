@@ -164,6 +164,10 @@ const Hero = ({ onDiscover }: { onDiscover: () => void }) => {
                       No Phone Needed
                     </span>
                   </div>
+
+                  <p className="text-center text-sm md:text-base text-foreground/70 font-medium pt-2">
+                    Scroll to Discover
+                  </p>
                 </motion.div>
 
                 <motion.div
