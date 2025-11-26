@@ -158,7 +158,7 @@ const Hero = ({ onDiscover }: { onDiscover: () => void }) => {
                       }}
                       className="bg-gradient-to-r from-primary to-primary-glow hover:shadow-lg hover:shadow-primary/50 px-8"
                     >
-                      Discover
+                      Scroll to Discover
                     </Button>
                   </div>
                 </motion.div>
