@@ -1,4 +1,4 @@
-onHoverStart={() => !isMobile && (setIsExpanded(true), onDiscover())}import { useState, useEffect } from "react";
+
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Shield, Heart, MapPin } from "lucide-react";
