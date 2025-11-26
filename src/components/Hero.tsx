@@ -99,7 +99,7 @@ const Hero = ({ onDiscover }: { onDiscover: () => void }) => {
                 transition={{ duration: 0.3 }}
                 className="text-sm md:text-lg font-medium text-foreground/70"
               >
-                Tap to Explore
+                Tap to Learn More
               </motion.p>
               
               <motion.div
