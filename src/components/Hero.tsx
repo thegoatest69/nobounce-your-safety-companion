@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+onHoverStart={() => !isMobile && (setIsExpanded(true), onDiscover())}import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Shield, Heart, MapPin } from "lucide-react";
@@ -108,7 +108,7 @@ const Hero = ({ onDiscover }: { onDiscover: () => void }) => {
                   borderRadius: isExpanded ? "24px" : "50%"
                 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
-                onHoverStart() => !isMobile && (setIsExpanded(true), onDiscover()}
+                onHoverStart() => !isMobile && (setIsExpanded(true), setTimeout(() => onDiscover(), 800)
                 onHoverEnd={() => !isMobile && setIsExpanded(false)}
                 onClick={() => {
                   if (isMobile) {
