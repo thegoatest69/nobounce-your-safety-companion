@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Hero from "@/components/Hero";
 import Problem from "@/components/Problem";
 import WhyNoBounce from "@/components/WhyNoBounce";
@@ -8,16 +10,29 @@ import Waitlist from "@/components/Waitlist";
 import Footer from "@/components/Footer";
 
 const Index = () => {
+  const [showFullSite, setShowFullSite] = useState(false);
+
   return (
     <div className="min-h-screen">
-      <Hero />
-      <Problem />
-      <WhyNoBounce />
-      <HowItWorks />
-      <ProductShowcase />
-      <Roadmap />
-      <Waitlist />
-      <Footer />
+      <Hero onDiscover={() => setShowFullSite(true)} />
+      
+      <AnimatePresence>
+        {showFullSite && (
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            <Problem />
+            <WhyNoBounce />
+            <HowItWorks />
+            <ProductShowcase />
+            <Roadmap />
+            <Waitlist />
+            <Footer />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
