@@ -112,10 +112,8 @@ const Hero = ({ onDiscover }: { onDiscover: () => void }) => {
                 onHoverStart={() => !isMobile && setIsExpanded(true)}
                 onHoverEnd={() => !isMobile && setIsExpanded(false)}
                 onClick={() => {
-                  if (isMobile) {
-                    setIsExpanded(true);
-                    setTimeout(() => onDiscover(), 800);
-                  }
+                  setIsExpanded(true);
+                  setTimeout(() => onDiscover(), 800);
                 }}
                 className="relative bg-gradient-to-br from-primary/20 to-safety/20 backdrop-blur-sm border-4 border-primary/30 cursor-pointer flex items-center justify-center shadow-2xl shadow-primary/50 p-6 md:p-8"
               >
