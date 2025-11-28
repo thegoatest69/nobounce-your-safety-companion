@@ -66,8 +66,11 @@ const Hero = ({ onDiscover }: { onDiscover: () => void }) => {
           >
             <motion.div
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
+              animate={{ 
+                opacity: isExpanded ? 0 : 1, 
+                y: isExpanded ? -20 : 0 
+              }}
+              transition={{ delay: isExpanded ? 0 : 0.2, duration: 0.3 }}
               className="inline-block mb-4 px-3 md:px-4 py-1.5 md:py-2 bg-primary/10 rounded-full text-xs md:text-sm font-medium text-primary"
             >
               <span className="inline-flex items-center gap-1 md:gap-2">
