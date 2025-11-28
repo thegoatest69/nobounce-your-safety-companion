@@ -64,12 +64,12 @@ const WhyNoBounce = () => {
             >
               {/* Expanding card effect - desktop only */}
               <motion.div
-                initial={{ width: "100%" }}
+                initial={{ scale: 1 }}
                 animate={{ 
-                  width: hoveredCard === index ? "110%" : "100%",
+                  scale: hoveredCard === index ? 1.02 : 1,
                 }}
-                transition={{ duration: 0.5, delay: 0.1 }}
-                className="relative hidden md:block"
+                transition={{ duration: 0.3 }}
+                className="relative hidden md:block origin-center"
               >
                 {/* Glowing circle background */}
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
