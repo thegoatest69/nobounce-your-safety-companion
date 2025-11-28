@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Shield, Zap, Heart, Activity } from "lucide-react";
 
 const ProductShowcase = () => {
   return (
@@ -9,7 +8,7 @@ const ProductShowcase = () => {
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center max-w-6xl mx-auto">
-          {/* Feature grid */}
+          {/* Video showcase */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9, x: -50 }}
             whileInView={{ opacity: 1, scale: 1, x: 0 }}
@@ -17,45 +16,22 @@ const ProductShowcase = () => {
             transition={{ duration: 0.8 }}
             className="relative"
           >
-            <div className="grid grid-cols-2 gap-4 md:gap-6">
-              <motion.div
-                whileHover={{ scale: 1.05, rotate: -2 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-gradient-to-br from-primary/10 to-primary/5 p-4 md:p-6 rounded-xl md:rounded-2xl border border-primary/20 hover:shadow-lg hover:shadow-primary/20 transition-shadow"
+            <div className="relative rounded-2xl md:rounded-3xl overflow-hidden border-2 border-primary/30 shadow-2xl shadow-primary/20">
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-auto aspect-video object-cover"
               >
-                <Shield className="w-10 h-10 md:w-12 md:h-12 text-primary mb-2 md:mb-3" />
-                <h4 className="font-heading font-bold text-sm md:text-base mb-1">Protected</h4>
-                <p className="text-xs text-muted-foreground">24/7 Safety</p>
-              </motion.div>
-
-              <motion.div
-                whileHover={{ scale: 1.05, rotate: 2 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-gradient-to-br from-safety/10 to-safety/5 p-4 md:p-6 rounded-xl md:rounded-2xl border border-safety/20 hover:shadow-lg hover:shadow-safety/20 transition-shadow"
-              >
-                <Zap className="w-10 h-10 md:w-12 md:h-12 text-safety mb-2 md:mb-3" />
-                <h4 className="font-heading font-bold text-sm md:text-base mb-1">Instant</h4>
-                <p className="text-xs text-muted-foreground">Fast Response</p>
-              </motion.div>
-
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                className="bg-gradient-to-br from-safety/10 to-safety/5 p-4 md:p-6 rounded-xl md:rounded-2xl border border-safety/20"
-              >
-                <Heart className="w-10 h-10 md:w-12 md:h-12 text-safety mb-2 md:mb-3" />
-                <h4 className="font-heading font-bold text-sm md:text-base mb-1">Reliable</h4>
-                <p className="text-xs text-muted-foreground">Always On</p>
-              </motion.div>
-
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                className="bg-gradient-to-br from-primary/10 to-primary/5 p-4 md:p-6 rounded-xl md:rounded-2xl border border-primary/20"
-              >
-                <Activity className="w-10 h-10 md:w-12 md:h-12 text-primary mb-2 md:mb-3" />
-                <h4 className="font-heading font-bold text-sm md:text-base mb-1">Smart</h4>
-                <p className="text-xs text-muted-foreground">AI Detection</p>
-              </motion.div>
+                <source src="/videos/nobounce-demo.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+              {/* Gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent pointer-events-none" />
             </div>
+            {/* Decorative glow */}
+            <div className="absolute -inset-4 bg-primary/10 rounded-3xl blur-2xl -z-10" />
           </motion.div>
 
           {/* Content */}
