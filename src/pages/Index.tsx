@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Hero from "@/components/Hero";
 import Problem from "@/components/Problem";
+import VideoShowcase from "@/components/VideoShowcase";
 import WhyNoBounce from "@/components/WhyNoBounce";
 import HowItWorks from "@/components/HowItWorks";
 import ProductShowcase from "@/components/ProductShowcase";
@@ -24,6 +25,7 @@ const Index = () => {
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
             <Problem />
+            <VideoShowcase />
             <WhyNoBounce />
             <HowItWorks />
             <ProductShowcase />
