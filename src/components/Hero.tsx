@@ -79,7 +79,7 @@ const Hero = ({ onDiscover }: { onDiscover: () => void }) => {
                     animate={{ y: 0, opacity: 1 }}
                     exit={{ y: -20, opacity: 0 }}
                     transition={{ duration: 0.4 }}
-                    className="inline-block font-bold min-w-[70px]"
+                    className="inline-block font-bold min-w-[80px] text-center"
                   >
                     {words[currentWord]}
                   </motion.span>
