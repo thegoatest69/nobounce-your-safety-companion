@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Shield, Heart, MapPin } from "lucide-react";
 
@@ -72,16 +72,18 @@ const Hero = ({ onDiscover }: { onDiscover: () => void }) => {
             >
               <span className="inline-flex items-center gap-1 md:gap-2">
                 Safety-First For{" "}
-                <motion.span
-                  key={currentWord}
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  exit={{ y: -20, opacity: 0 }}
-                  transition={{ duration: 0.5 }}
-                  className="inline-block font-bold min-w-fit"
-                >
-                  {words[currentWord]}
-                </motion.span>
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={currentWord}
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: -20, opacity: 0 }}
+                    transition={{ duration: 0.4 }}
+                    className="inline-block font-bold min-w-[70px]"
+                  >
+                    {words[currentWord]}
+                  </motion.span>
+                </AnimatePresence>
               </span>
             </motion.div>
 
