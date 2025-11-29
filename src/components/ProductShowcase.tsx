@@ -7,37 +7,10 @@ const ProductShowcase = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-background" />
 
       <div className="container mx-auto px-4 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center max-w-6xl mx-auto">
-          {/* Video showcase */}
+        <div className="max-w-3xl mx-auto text-center">
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, x: -50 }}
-            whileInView={{ opacity: 1, scale: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="relative"
-          >
-            <div className="relative rounded-2xl md:rounded-3xl overflow-hidden border-2 border-primary/30 shadow-2xl shadow-primary/20">
-              <video
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="w-full h-auto aspect-video object-cover"
-              >
-                <source src="/videos/nobounce-demo.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-              {/* Gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent pointer-events-none" />
-            </div>
-            {/* Decorative glow */}
-            <div className="absolute -inset-4 bg-primary/10 rounded-3xl blur-2xl -z-10" />
-          </motion.div>
-
-          {/* Content */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
             className="space-y-4 md:space-y-6"
