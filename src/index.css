@@ -143,6 +143,35 @@ All colors MUST be HSL.
   }
 }
 
+@keyframes orbit {
+  0% {
+    transform: rotate(0deg) translateX(100px) rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg) translateX(100px) rotate(-360deg);
+  }
+}
+
+@keyframes depth-float {
+  0%, 100% {
+    transform: translateY(0) translateZ(0) rotateX(0);
+  }
+  50% {
+    transform: translateY(-30px) translateZ(20px) rotateX(5deg);
+  }
+}
+
+@keyframes glow-pulse {
+  0%, 100% {
+    opacity: 0.4;
+    filter: blur(40px);
+  }
+  50% {
+    opacity: 0.8;
+    filter: blur(60px);
+  }
+}
+
 @layer base {
   * {
     @apply border-border;
@@ -172,6 +201,18 @@ All colors MUST be HSL.
     animation: pulse-glow 2s ease-in-out infinite;
   }
   
+  .animate-orbit {
+    animation: orbit 20s linear infinite;
+  }
+  
+  .animate-depth-float {
+    animation: depth-float 8s ease-in-out infinite;
+  }
+  
+  .animate-glow-pulse {
+    animation: glow-pulse 4s ease-in-out infinite;
+  }
+  
   .text-gradient {
     @apply bg-clip-text text-transparent;
     background-image: var(--gradient-primary);
@@ -184,5 +225,30 @@ All colors MUST be HSL.
   .hover-lift:hover {
     transform: translateY(-4px);
     box-shadow: var(--shadow-primary);
+  }
+  
+  /* 3D Perspective */
+  .perspective-container {
+    perspective: 1000px;
+    transform-style: preserve-3d;
+  }
+  
+  .depth-1 { transform: translateZ(0); }
+  .depth-2 { transform: translateZ(-50px); }
+  .depth-3 { transform: translateZ(-100px); }
+  .depth-4 { transform: translateZ(-150px); }
+  .depth-5 { transform: translateZ(-200px); }
+  
+  /* Glassmorphism */
+  .glass {
+    background: hsl(var(--background) / 0.3);
+    backdrop-filter: blur(20px);
+    border: 1px solid hsl(var(--primary) / 0.1);
+  }
+  
+  .glass-strong {
+    background: hsl(var(--background) / 0.6);
+    backdrop-filter: blur(40px);
+    border: 1px solid hsl(var(--primary) / 0.2);
   }
 }
