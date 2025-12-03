@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
 import { Shield } from "lucide-react";
 
 const Hero = ({ onDiscover }: { onDiscover: () => void }) => {
@@ -15,9 +15,16 @@ const Hero = ({ onDiscover }: { onDiscover: () => void }) => {
     offset: ["start start", "end start"]
   });
 
-  const backgroundY = useTransform(scrollYProgress, [0, 1], [0, 200]);
-  const orbScale = useTransform(scrollYProgress, [0, 1], [1, 0.5]);
-  const orbOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  // Smooth spring values for mouse tracking
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const smoothMouseX = useSpring(mouseX, { stiffness: 50, damping: 20 });
+  const smoothMouseY = useSpring(mouseY, { stiffness: 50, damping: 20 });
+
+  const backgroundY = useTransform(scrollYProgress, [0, 1], [0, 300]);
+  const foregroundY = useTransform(scrollYProgress, [0, 1], [0, 150]);
+  const textOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.8]);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 1024);
@@ -28,14 +35,15 @@ const Hero = ({ onDiscover }: { onDiscover: () => void }) => {
   useEffect(() => {
     if (isMobile) return;
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({
-        x: (e.clientX / window.innerWidth - 0.5) * 40,
-        y: (e.clientY / window.innerHeight - 0.5) * 40,
-      });
+      const x = (e.clientX / window.innerWidth - 0.5) * 2;
+      const y = (e.clientY / window.innerHeight - 0.5) * 2;
+      mouseX.set(x);
+      mouseY.set(y);
+      setMousePosition({ x: x * 30, y: y * 30 });
     };
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [isMobile]);
+  }, [isMobile, mouseX, mouseY]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -48,162 +56,155 @@ const Hero = ({ onDiscover }: { onDiscover: () => void }) => {
     <section 
       ref={containerRef}
       id="home" 
-      className="relative min-h-screen flex items-center justify-center overflow-hidden py-12 md:py-0 perspective-container"
+      className="relative h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Parallax Background Layers */}
-      <motion.div 
-        style={{ y: backgroundY }}
-        className="absolute inset-0 overflow-hidden"
-      >
-        {/* Deep layer orbs */}
-        <motion.div
-          style={{ 
-            x: mousePosition.x * 0.5, 
-            y: mousePosition.y * 0.5,
-            scale: orbScale,
-            opacity: orbOpacity
-          }}
-          className="absolute -top-20 -left-20 w-[500px] h-[500px] bg-gradient-radial from-primary/20 via-primary/5 to-transparent rounded-full blur-3xl"
-        />
-        
-        <motion.div
-          style={{ 
-            x: mousePosition.x * -0.3, 
-            y: mousePosition.y * -0.3 
-          }}
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.2, 0.4, 0.2],
-          }}
-          transition={{ duration: 8, repeat: Infinity }}
-          className="absolute -bottom-40 -right-40 w-[600px] h-[600px] bg-gradient-radial from-safety/15 via-safety/5 to-transparent rounded-full blur-3xl"
-        />
-
-        {/* Mid layer floating elements */}
-        <motion.div
-          style={{ 
-            x: mousePosition.x * 1.2, 
-            y: mousePosition.y * 1.2 
-          }}
-          animate={{ rotate: 360 }}
-          transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-          className="absolute top-1/4 left-1/4 w-px h-32 bg-gradient-to-b from-primary/0 via-primary/30 to-primary/0"
-        />
-        
-        <motion.div
-          style={{ 
-            x: mousePosition.x * -0.8, 
-            y: mousePosition.y * -0.8 
-          }}
-          animate={{ rotate: -360 }}
-          transition={{ duration: 80, repeat: Infinity, ease: "linear" }}
-          className="absolute bottom-1/4 right-1/3 w-px h-24 bg-gradient-to-b from-safety/0 via-safety/20 to-safety/0"
-        />
-
-        {/* Floating orbs with depth */}
-        {[...Array(5)].map((_, i) => (
+      {/* Immersive 3D Background Layers */}
+      <div className="absolute inset-0">
+        {/* Deep background - slowest parallax */}
+        <motion.div 
+          style={{ y: backgroundY, scale }}
+          className="absolute inset-0"
+        >
+          {/* Large ambient glow */}
           <motion.div
-            key={i}
-            style={{
-              x: mousePosition.x * (0.3 + i * 0.2),
-              width: 4 + i * 2,
-              height: 4 + i * 2,
-              left: `${15 + i * 18}%`,
-              top: `${20 + i * 12}%`,
-              background: i % 2 === 0 
-                ? 'hsl(var(--primary) / 0.5)' 
-                : 'hsl(var(--safety) / 0.5)',
-            }}
-            animate={{
-              y: [0, -20 - i * 5, 0],
-              opacity: [0.3, 0.6, 0.3],
-            }}
-            transition={{
-              duration: 4 + i,
-              repeat: Infinity,
-              delay: i * 0.5,
-            }}
-            className="absolute rounded-full blur-sm"
+            style={{ x: smoothMouseX, y: smoothMouseY }}
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150vw] h-[150vh] bg-[radial-gradient(ellipse_at_center,hsl(var(--primary)/0.15)_0%,transparent_50%)]"
           />
-        ))}
-      </motion.div>
-
-      {/* Main Content */}
-      <div className="container mx-auto px-4 relative z-10 w-full">
-        <div className="flex flex-col items-center justify-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center"
+          
+          {/* Mountain-like shapes in background */}
+          <motion.div 
+            style={{ x: mousePosition.x * 0.1, y: mousePosition.y * 0.1 }}
+            className="absolute bottom-0 left-0 right-0 h-[60vh]"
           >
-            {/* Safety badge with parallax */}
-            <motion.div
-              style={{ 
-                x: mousePosition.x * 0.1, 
-                y: mousePosition.y * 0.1 
-              }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ 
-                opacity: isExpanded ? 0 : 1, 
-                y: isExpanded ? -20 : 0 
-              }}
-              transition={{ delay: isExpanded ? 0 : 0.2, duration: 0.3 }}
-              className="inline-block mb-4 px-3 md:px-4 py-1.5 md:py-2 glass rounded-full text-xs md:text-sm font-medium text-primary"
-            >
-              <span className="inline-flex items-center gap-1 md:gap-2">
-                Safety-First For{" "}
-                <AnimatePresence mode="wait">
-                  <motion.span
-                    key={currentWord}
-                    initial={{ y: 20, opacity: 0, rotateX: -90 }}
-                    animate={{ y: 0, opacity: 1, rotateX: 0 }}
-                    exit={{ y: -20, opacity: 0, rotateX: 90 }}
-                    transition={{ duration: 0.4 }}
-                    className="inline-block font-bold min-w-[80px] text-center"
-                  >
-                    {words[currentWord]}
-                  </motion.span>
-                </AnimatePresence>
-              </span>
-            </motion.div>
+            <div className="absolute bottom-0 left-[-10%] w-[60%] h-full bg-gradient-to-t from-muted/30 to-transparent rounded-t-[100%] blur-sm" />
+            <div className="absolute bottom-0 right-[-5%] w-[50%] h-[80%] bg-gradient-to-t from-muted/20 to-transparent rounded-t-[100%] blur-sm" />
+          </motion.div>
+        </motion.div>
 
-            {/* Main interactive orb */}
+        {/* Mid layer - medium parallax */}
+        <motion.div 
+          style={{ y: foregroundY }}
+          className="absolute inset-0"
+        >
+          <motion.div
+            style={{ x: mousePosition.x * 0.3, y: mousePosition.y * 0.3 }}
+            className="absolute top-[20%] left-[10%] w-[300px] h-[300px] rounded-full bg-gradient-radial from-primary/10 to-transparent blur-2xl"
+          />
+          <motion.div
+            style={{ x: mousePosition.x * -0.2, y: mousePosition.y * -0.2 }}
+            className="absolute bottom-[30%] right-[15%] w-[200px] h-[200px] rounded-full bg-gradient-radial from-safety/10 to-transparent blur-2xl"
+          />
+        </motion.div>
+
+        {/* Foreground floating particles */}
+        <motion.div className="absolute inset-0 pointer-events-none">
+          {[...Array(20)].map((_, i) => (
             <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.3 }}
-              className="flex flex-col items-center justify-center gap-4 md:gap-6"
+              key={i}
+              style={{
+                left: `${5 + (i * 4.5) % 90}%`,
+                top: `${10 + (i * 7) % 80}%`,
+              }}
+              animate={{
+                y: [0, -30 - (i % 3) * 10, 0],
+                x: [0, (i % 2 === 0 ? 10 : -10), 0],
+                opacity: [0.1, 0.4, 0.1],
+              }}
+              transition={{
+                duration: 5 + (i % 4),
+                repeat: Infinity,
+                delay: i * 0.3,
+                ease: "easeInOut"
+              }}
+              className="absolute w-1 h-1 rounded-full bg-primary/60"
+            />
+          ))}
+        </motion.div>
+
+        {/* Horizontal scan lines for depth */}
+        <div 
+          className="absolute inset-0 opacity-[0.02] pointer-events-none"
+          style={{
+            backgroundImage: 'repeating-linear-gradient(0deg, hsl(var(--foreground)) 0px, transparent 1px, transparent 3px)',
+          }}
+        />
+
+        {/* Vignette overlay */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,hsl(var(--background))_80%)]" />
+      </div>
+
+      {/* Main Content Layer */}
+      <motion.div 
+        style={{ opacity: textOpacity }}
+        className="relative z-10 w-full"
+      >
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col items-center justify-center">
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+              className="text-center"
             >
-              <motion.p
-                style={{ 
-                  x: mousePosition.x * 0.05, 
-                  y: mousePosition.y * 0.05 
-                }}
-                animate={{ 
-                  opacity: isExpanded ? 0 : 1,
-                  y: isExpanded ? -20 : 0
-                }}
-                transition={{ duration: 0.3 }}
-                className="text-sm md:text-lg font-medium text-foreground/70"
+              {/* Manifesto-style label */}
+              <motion.div
+                style={{ x: mousePosition.x * 0.05, y: mousePosition.y * 0.05 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: isExpanded ? 0 : 1 }}
+                className="mb-8"
               >
-                Tap to Learn More
+                <span className="text-[10px] md:text-xs tracking-[0.3em] uppercase text-muted-foreground font-mono">
+                  ////// Safety Revolution
+                </span>
+              </motion.div>
+
+              {/* Word rotator badge */}
+              <motion.div
+                style={{ x: mousePosition.x * 0.08, y: mousePosition.y * 0.08 }}
+                animate={{ opacity: isExpanded ? 0 : 1, y: isExpanded ? -20 : 0 }}
+                transition={{ duration: 0.3 }}
+                className="inline-block mb-6 px-4 py-2 border border-primary/20 rounded-full text-xs md:text-sm font-medium text-primary/80 backdrop-blur-sm"
+              >
+                <span className="inline-flex items-center gap-2">
+                  Protecting{" "}
+                  <AnimatePresence mode="wait">
+                    <motion.span
+                      key={currentWord}
+                      initial={{ y: 20, opacity: 0, filter: "blur(4px)" }}
+                      animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
+                      exit={{ y: -20, opacity: 0, filter: "blur(4px)" }}
+                      transition={{ duration: 0.4 }}
+                      className="inline-block font-bold min-w-[80px] text-center text-foreground"
+                    >
+                      {words[currentWord]}
+                    </motion.span>
+                  </AnimatePresence>
+                </span>
+              </motion.div>
+
+              {/* Tap instruction */}
+              <motion.p
+                style={{ x: mousePosition.x * 0.03, y: mousePosition.y * 0.03 }}
+                animate={{ opacity: isExpanded ? 0 : 0.6 }}
+                className="text-sm font-mono tracking-wider text-muted-foreground mb-8"
+              >
+                [ TAP TO DISCOVER ]
               </motion.p>
               
-              {/* 3D Depth Container for main orb */}
+              {/* Main Interactive Orb */}
               <motion.div
                 style={{
                   x: mousePosition.x * 0.15,
                   y: mousePosition.y * 0.15,
-                  rotateX: mousePosition.y * -0.1,
-                  rotateY: mousePosition.x * 0.1,
+                  rotateX: mousePosition.y * -0.05,
+                  rotateY: mousePosition.x * 0.05,
                 }}
                 animate={{ 
-                  width: isExpanded ? (isMobile ? "90vw" : "600px") : (isMobile ? "200px" : "250px"),
-                  height: isExpanded ? (isMobile ? "auto" : "350px") : (isMobile ? "200px" : "250px"),
-                  borderRadius: isExpanded ? "24px" : "50%"
+                  width: isExpanded ? (isMobile ? "90vw" : "600px") : (isMobile ? "220px" : "280px"),
+                  height: isExpanded ? (isMobile ? "auto" : "380px") : (isMobile ? "220px" : "280px"),
+                  borderRadius: isExpanded ? "32px" : "50%"
                 }}
-                transition={{ duration: 0.5, ease: "easeInOut" }}
+                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                 onHoverStart={() => {
                   if (!isMobile) {
                     setIsExpanded(true);
@@ -214,81 +215,94 @@ const Hero = ({ onDiscover }: { onDiscover: () => void }) => {
                   setIsExpanded(true);
                   setTimeout(() => onDiscover(), 1500);
                 }}
-                className="relative glass-strong cursor-pointer flex items-center justify-center p-6 md:p-8 group"
-                whileHover={{ scale: isExpanded ? 1 : 1.05 }}
-                whileTap={{ scale: 0.98 }}
+                className="relative cursor-pointer flex items-center justify-center p-8 md:p-10 mx-auto group perspective-container"
               >
-                {/* Glow ring */}
+                {/* Outer glow ring */}
                 <motion.div
                   animate={{
-                    opacity: [0.3, 0.6, 0.3],
-                    scale: [1, 1.1, 1],
+                    opacity: [0.2, 0.5, 0.2],
+                    scale: [1, 1.05, 1],
                   }}
-                  transition={{ duration: 3, repeat: Infinity }}
-                  className="absolute inset-0 rounded-[inherit] bg-gradient-to-br from-primary/20 to-safety/20 blur-xl -z-10"
+                  transition={{ duration: 4, repeat: Infinity }}
+                  className="absolute inset-[-2px] rounded-[inherit] bg-gradient-to-br from-primary/30 via-transparent to-safety/30 blur-xl"
                 />
                 
-                {/* Inner border glow */}
-                <div className="absolute inset-0 rounded-[inherit] border-2 border-primary/30 group-hover:border-primary/50 transition-colors" />
+                {/* Glass background */}
+                <div className="absolute inset-0 rounded-[inherit] bg-background/40 backdrop-blur-xl border border-white/5" />
                 
-                {/* Collapsed state */}
+                {/* Inner ring highlight */}
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                  className="absolute inset-2 rounded-[inherit] border border-primary/10"
+                />
+                
+                {/* Collapsed state - Logo */}
                 <motion.div
                   animate={{ scale: isExpanded ? 0 : 1, opacity: isExpanded ? 0 : 1 }}
                   transition={{ duration: 0.3 }}
-                  className="absolute"
+                  className="absolute flex flex-col items-center justify-center gap-4"
                 >
-                  <div className="flex flex-col items-center justify-center gap-3">
-                    <motion.div 
-                      animate={{ 
-                        boxShadow: [
-                          '0 0 20px hsl(var(--primary) / 0.4)',
-                          '0 0 40px hsl(var(--primary) / 0.6)',
-                          '0 0 20px hsl(var(--primary) / 0.4)'
-                        ]
-                      }}
-                      transition={{ duration: 2, repeat: Infinity }}
-                      className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-gradient-to-br from-primary to-primary-glow flex items-center justify-center"
-                    >
-                      <Shield className="w-10 h-10 md:w-12 md:h-12 text-primary-foreground" />
-                    </motion.div>
-                    <h1 className="text-2xl md:text-3xl font-heading font-bold text-gradient text-center">
-                      NoBounce
+                  <motion.div 
+                    animate={{ 
+                      boxShadow: [
+                        '0 0 30px hsl(var(--primary) / 0.3), inset 0 0 30px hsl(var(--primary) / 0.1)',
+                        '0 0 60px hsl(var(--primary) / 0.5), inset 0 0 40px hsl(var(--primary) / 0.2)',
+                        '0 0 30px hsl(var(--primary) / 0.3), inset 0 0 30px hsl(var(--primary) / 0.1)'
+                      ]
+                    }}
+                    transition={{ duration: 3, repeat: Infinity }}
+                    className="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-br from-primary via-primary to-primary-glow flex items-center justify-center"
+                  >
+                    <Shield className="w-12 h-12 md:w-14 md:h-14 text-primary-foreground drop-shadow-lg" />
+                  </motion.div>
+                  <div className="space-y-1">
+                    <h1 className="text-3xl md:text-4xl font-heading font-black tracking-tight text-gradient">
+                      NOBOUNCE
                     </h1>
+                    <p className="text-[10px] md:text-xs tracking-[0.2em] text-muted-foreground font-mono">
+                      // Your Guardian
+                    </p>
                   </div>
                 </motion.div>
 
-                {/* Expanded state */}
+                {/* Expanded state - Details */}
                 <motion.div
                   animate={{
                     opacity: isExpanded ? 1 : 0,
                     visibility: isExpanded ? "visible" : "hidden",
-                    scale: isExpanded ? 1 : 0.8
+                    scale: isExpanded ? 1 : 0.9
                   }}
                   transition={{ duration: 0.5, delay: isExpanded ? 0.2 : 0 }}
-                  className="w-full space-y-4 md:space-y-6"
+                  className="relative w-full space-y-6"
                 >
-                  <div className="text-center space-y-3">
-                    <h1 className="text-3xl md:text-5xl font-heading font-bold text-gradient">
-                      NoBounce
+                  <div className="text-center space-y-4">
+                    <motion.span 
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground font-mono block"
+                    >
+                      ////// Introducing
+                    </motion.span>
+                    <h1 className="text-4xl md:text-6xl font-heading font-black tracking-tight text-gradient">
+                      NOBOUNCE
                     </h1>
-                    <p className="text-sm md:text-lg text-foreground/90 font-medium">Your Guardian On Finger</p>
-                    <p className="text-xs md:text-sm text-muted-foreground">
+                    <p className="text-base md:text-xl text-foreground/90 font-medium">
+                      Your Guardian On Finger
+                    </p>
+                    <p className="text-sm text-muted-foreground max-w-md mx-auto leading-relaxed">
                       The Autonomous Emergency Ring that ensures help is always within reach, even without a mobile phone.
                     </p>
                   </div>
 
-                  <div className="flex flex-wrap gap-2 justify-center">
+                  <div className="flex flex-wrap gap-3 justify-center">
                     {["AI-Powered", "24/7 Safety", "No Phone Needed"].map((tag, i) => (
                       <motion.span
                         key={tag}
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.3 + i * 0.1 }}
-                        className={`px-3 py-1.5 rounded-full text-xs font-medium ${
-                          i === 0 ? 'bg-primary/20 text-primary' :
-                          i === 1 ? 'bg-safety/20 text-safety' :
-                          'bg-primary/10 text-foreground/80'
-                        }`}
+                        transition={{ delay: 0.4 + i * 0.1 }}
+                        className="px-4 py-2 rounded-full text-xs font-mono tracking-wider border border-primary/20 bg-primary/5 text-primary"
                       >
                         {tag}
                       </motion.span>
@@ -296,30 +310,35 @@ const Hero = ({ onDiscover }: { onDiscover: () => void }) => {
                   </div>
 
                   <motion.p
-                    animate={{ opacity: [0.5, 1, 0.5] }}
+                    animate={{ opacity: [0.4, 0.8, 0.4] }}
                     transition={{ duration: 2, repeat: Infinity }}
-                    className="text-center text-sm md:text-base text-foreground/70 font-medium pt-2"
+                    className="text-center text-xs md:text-sm text-muted-foreground font-mono tracking-wider pt-4"
                   >
-                    Scroll to Discover
+                    [ SCROLL TO EXPLORE ]
                   </motion.p>
-                </motion.div>
-
-                {/* Decorative shield */}
-                <motion.div
-                  animate={{
-                    scale: isExpanded ? 1 : 0,
-                    rotate: isExpanded ? 15 : 315,
-                  }}
-                  transition={{ duration: 0.5 }}
-                  className="absolute bottom-4 right-4 md:bottom-6 md:right-6"
-                >
-                  <Shield className="w-12 h-12 md:w-16 md:h-16 text-primary/20" />
                 </motion.div>
               </motion.div>
             </motion.div>
-          </motion.div>
+          </div>
         </div>
-      </div>
+      </motion.div>
+
+      {/* Bottom copyright-style text */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: isExpanded ? 0 : 1 }}
+        className="absolute bottom-8 left-8 text-left"
+      >
+        <p className="text-[10px] font-mono tracking-wider text-muted-foreground/50">
+          // Copyright © 2024
+        </p>
+        <p className="text-[10px] font-mono tracking-wider text-muted-foreground/50">
+          NoBounce, Inc.
+        </p>
+        <p className="text-[10px] font-mono tracking-wider text-muted-foreground/50">
+          All Rights Reserved.
+        </p>
+      </motion.div>
 
       {/* Scroll indicator */}
       <motion.div
@@ -329,14 +348,14 @@ const Hero = ({ onDiscover }: { onDiscover: () => void }) => {
         className="absolute bottom-8 left-1/2 -translate-x-1/2"
       >
         <motion.div
-          animate={{ y: [0, 10, 0] }}
+          animate={{ y: [0, 8, 0] }}
           transition={{ duration: 1.5, repeat: Infinity }}
-          className="w-6 h-10 rounded-full border-2 border-primary/30 flex items-start justify-center p-2"
+          className="w-5 h-8 rounded-full border border-primary/20 flex items-start justify-center p-1.5"
         >
           <motion.div
-            animate={{ y: [0, 12, 0], opacity: [1, 0, 1] }}
+            animate={{ y: [0, 10, 0], opacity: [1, 0.3, 1] }}
             transition={{ duration: 1.5, repeat: Infinity }}
-            className="w-1.5 h-1.5 rounded-full bg-primary"
+            className="w-1 h-1 rounded-full bg-primary"
           />
         </motion.div>
       </motion.div>
