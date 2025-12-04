@@ -3,23 +3,47 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import ParticleField from "./ParticleField";
 
 const Waitlist = () => {
   return (
-    <section id="waitlist" className="py-12 md:py-20 relative overflow-hidden bg-gradient-to-b from-primary/5 to-background">
-      <div className="absolute inset-0 bg-gradient-to-b from-primary/10 via-background to-safety/10" />
-      
+    <section id="waitlist" className="relative min-h-screen flex items-center py-20 md:py-32 overflow-hidden">
+      {/* Background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-background to-background" />
+      <motion.div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/20 blur-[150px]"
+        animate={{ scale: [1, 1.2, 1] }}
+        transition={{ duration: 10, repeat: Infinity }}
+      />
+      <motion.div
+        className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-accent-pink/10 blur-[100px]"
+        animate={{ scale: [1.2, 1, 1.2] }}
+        transition={{ duration: 12, repeat: Infinity }}
+      />
+      <ParticleField count={25} />
+      <div className="absolute inset-0 noise-overlay" />
+
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8 }}
           className="max-w-2xl mx-auto"
         >
-          <div className="text-center mb-8 md:mb-12">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold mb-4 md:mb-6 px-4">Join Waitlist</h2>
-            <p className="text-base md:text-xl text-muted-foreground px-4">
+          <div className="text-center mb-12 md:mb-16">
+            <motion.span
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="inline-block text-xs md:text-sm tracking-[0.3em] uppercase text-muted-foreground mb-4"
+            >
+              Early Access
+            </motion.span>
+            <h2 className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold mb-6">
+              Join <span className="text-gradient">Waitlist</span>
+            </h2>
+            <p className="text-base md:text-xl text-muted-foreground">
               Request early access to curated insights and custom feeds.
             </p>
           </div>
@@ -29,49 +53,52 @@ const Waitlist = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="bg-card rounded-2xl md:rounded-3xl p-6 md:p-8 shadow-2xl border border-border"
+            className="glass-strong rounded-3xl p-8 md:p-10 border border-primary/20"
+            style={{
+              boxShadow: "0 0 60px hsl(var(--primary) / 0.15)",
+            }}
           >
-            <form className="space-y-4 md:space-y-6">
+            <form className="space-y-6">
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-sm md:text-base">Email *</Label>
+                <Label htmlFor="email" className="text-sm font-medium">Email *</Label>
                 <Input
                   id="email"
                   type="email"
                   placeholder="your.email@example.com"
-                  className="h-11 md:h-12 text-sm md:text-base border-2 focus:border-primary transition-colors"
+                  className="h-12 bg-background/50 border-border focus:border-primary rounded-xl transition-colors"
                   required
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="company" className="text-sm md:text-base">Company</Label>
+                <Label htmlFor="company" className="text-sm font-medium">Company</Label>
                 <Input
                   id="company"
                   type="text"
                   placeholder="Optional"
-                  className="h-11 md:h-12 text-sm md:text-base border-2 focus:border-primary transition-colors"
+                  className="h-12 bg-background/50 border-border focus:border-primary rounded-xl transition-colors"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="usage" className="text-sm md:text-base">How will you use our news feed? *</Label>
+                <Label htmlFor="usage" className="text-sm font-medium">How will you use NoBounce? *</Label>
                 <Textarea
                   id="usage"
                   placeholder="Tell us about your use case..."
-                  className="min-h-28 md:min-h-32 text-sm md:text-base border-2 focus:border-primary transition-colors resize-none"
+                  className="min-h-28 bg-background/50 border-border focus:border-primary rounded-xl transition-colors resize-none"
                   required
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="location" className="text-sm md:text-base">Your Location</Label>
+                <Label htmlFor="location" className="text-sm font-medium">Your Location</Label>
                 <Input
                   id="location"
                   type="text"
-                  placeholder="Sri Ganganagar, Rajasthan (From where it is being built)"
-                  className="h-11 md:h-12 text-sm md:text-base border-2 focus:border-primary transition-colors"
+                  placeholder="City, Country"
+                  className="h-12 bg-background/50 border-border focus:border-primary rounded-xl transition-colors"
                 />
-                <p className="text-xs md:text-sm text-muted-foreground">It will help us expand us</p>
+                <p className="text-xs text-muted-foreground">Helps us plan our expansion</p>
               </div>
 
               <motion.div
@@ -81,14 +108,16 @@ const Waitlist = () => {
                 <Button
                   type="submit"
                   size="lg"
-                  className="w-full h-12 md:h-14 text-base md:text-lg bg-gradient-to-r from-primary to-primary-glow hover:shadow-lg hover:shadow-primary/50 transition-all duration-300"
+                  className="w-full h-14 text-lg font-semibold bg-gradient-to-r from-primary to-primary-glow hover:opacity-90 rounded-xl"
+                  style={{
+                    boxShadow: "0 0 40px hsl(var(--primary) / 0.4)",
+                  }}
                 >
                   Join Waitlist
                 </Button>
               </motion.div>
             </form>
           </motion.div>
-
         </motion.div>
       </div>
     </section>
