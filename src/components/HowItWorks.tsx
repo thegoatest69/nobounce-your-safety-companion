@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { Database, Cpu, Zap } from "lucide-react";
-import ParticleField from "./ParticleField";
 
 const steps = [
   {
@@ -11,7 +10,7 @@ const steps = [
   },
   {
     icon: Cpu,
-    title: "AI Processing",
+    title: "AI-Processing",
     description: "Raw data is processed into AI model trained specially to identify risk",
     step: "02",
   },
@@ -25,99 +24,54 @@ const steps = [
 
 const HowItWorks = () => {
   return (
-    <section id="how-it-works" className="relative min-h-screen flex items-center py-20 md:py-32 overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-background to-background" />
-      <motion.div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-primary/10 blur-[200px]"
-        animate={{ scale: [1, 1.1, 1], rotate: [0, 180, 360] }}
-        transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-      />
-      <ParticleField count={15} />
-      <div className="absolute inset-0 noise-overlay" />
-
-      <div className="container mx-auto px-4 relative z-10">
+    <section id="how-it-works" className="py-12 md:py-20 bg-gradient-to-b from-background to-primary/5">
+      <div className="container mx-auto px-4">
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16 md:mb-24"
+          transition={{ duration: 0.6 }}
+          className="text-center mb-8 md:mb-16"
         >
-          <motion.span
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="inline-block text-xs md:text-sm tracking-[0.3em] uppercase text-muted-foreground mb-4"
-          >
-            The Process
-          </motion.span>
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold mb-6">
-            How It <span className="text-gradient">Works</span>
-          </h2>
-          <p className="text-base md:text-xl text-muted-foreground max-w-2xl mx-auto">
-            A seamless and reliable emergency response system.
+          <h2 className="text-2xl md:text-4xl lg:text-5xl font-heading font-bold mb-4 md:mb-6 px-4">How It All Works Together</h2>
+          <p className="text-sm md:text-base lg:text-lg text-muted-foreground max-w-3xl mx-auto px-4">
+            Let's dive into how NoBounce's core components work together to provide a seamless and reliable emergency response system
           </p>
         </motion.div>
 
-        {/* Process steps */}
-        <div className="max-w-5xl mx-auto">
-          {/* Connection line */}
-          <div className="hidden lg:block absolute left-1/2 top-1/2 -translate-y-1/2 w-[60%] h-[2px] -translate-x-1/2">
-            <div className="w-full h-full bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
-          </div>
+        <div className="relative max-w-5xl mx-auto">
+          <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-primary via-safety to-primary transform -translate-y-1/2" />
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-12 relative">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 relative z-10">
             {steps.map((step, index) => (
               <motion.div
                 key={step.title}
-                initial={{ opacity: 0, y: 50 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.2 }}
                 className="relative"
               >
                 <motion.div
-                  whileHover={{ y: -10, scale: 1.02 }}
-                  transition={{ duration: 0.3 }}
-                  className="relative glass rounded-3xl p-8 text-center border border-primary/20 overflow-hidden"
+                  whileHover={{ scale: 1.05, rotate: [0, -1, 1, 0] }}
+                  whileTap={{ scale: 0.98 }}
+                  className="bg-card rounded-xl md:rounded-2xl p-6 md:p-8 shadow-lg border-2 border-primary/20 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/20 transition-all duration-300"
                 >
-                  {/* Step number */}
-                  <div className="absolute top-4 right-4 text-6xl font-heading font-bold text-primary/10">
+                  <div className="absolute -top-3 -right-3 md:-top-4 md:-right-4 w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-safety to-safety-glow rounded-full flex items-center justify-center text-safety-foreground font-bold shadow-lg text-sm md:text-base">
                     {step.step}
                   </div>
 
-                  {/* Icon */}
                   <motion.div
-                    whileHover={{ scale: 1.1, rotate: 10 }}
-                    className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-primary to-accent-cyan flex items-center justify-center shadow-lg glow-primary"
+                    whileHover={{ rotate: [0, -10, 10, 0] }}
+                    transition={{ duration: 0.5 }}
+                    className="w-14 h-14 md:w-20 md:h-20 rounded-xl md:rounded-2xl bg-gradient-to-br from-primary/20 to-safety/20 flex items-center justify-center mb-4 md:mb-6 mx-auto"
                   >
-                    <step.icon className="w-10 h-10 text-white" />
+                    <step.icon className="w-7 h-7 md:w-10 md:h-10 text-primary" />
                   </motion.div>
 
-                  <h3 className="text-xl md:text-2xl font-heading font-bold mb-4">
-                    {step.title}
-                  </h3>
-                  <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
-                    {step.description}
-                  </p>
-
-                  {/* Glow effect */}
-                  <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 w-40 h-40 rounded-full bg-primary/20 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <h3 className="text-lg md:text-2xl font-heading font-bold mb-3 md:mb-4 text-center">{step.title}</h3>
+                  <p className="text-xs md:text-base text-muted-foreground text-center leading-relaxed">{step.description}</p>
                 </motion.div>
-
-                {/* Arrow for desktop */}
-                {index < steps.length - 1 && (
-                  <div className="hidden lg:block absolute top-1/2 -right-6 transform -translate-y-1/2 z-20">
-                    <motion.div
-                      animate={{ x: [0, 5, 0] }}
-                      transition={{ duration: 1.5, repeat: Infinity }}
-                      className="text-primary/50"
-                    >
-                      →
-                    </motion.div>
-                  </div>
-                )}
               </motion.div>
             ))}
           </div>

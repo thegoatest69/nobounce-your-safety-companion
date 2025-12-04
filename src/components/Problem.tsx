@@ -1,102 +1,65 @@
 import { motion } from "framer-motion";
 import { AlertCircle, Smartphone, DollarSign } from "lucide-react";
-import ParticleField from "./ParticleField";
 
 const problems = [
   {
     icon: AlertCircle,
     title: "Delayed Emergency Awareness",
     description: "Emergency situations often go unnoticed until it's too late, leading to delayed responses and increased risks.",
-    gradient: "from-accent-orange to-accent-pink",
+    color: "safety",
   },
   {
     icon: Smartphone,
     title: "Mobile Dependency",
-    description: "Many emergency devices rely on mobile phones, which may not always be accessible during emergencies.",
-    gradient: "from-primary to-accent-cyan",
+    description: "Many rings and emergency devices rely on mobile phones, which may not always be accessible or functional during emergencies.",
+    color: "primary",
   },
   {
     icon: DollarSign,
     title: "Expensive Solutions",
-    description: "Current emergency systems can be costly, making them inaccessible to a large portion of the population.",
-    gradient: "from-accent-cyan to-primary",
+    description: "Current emergency alert systems or smart wearables that have less dependence can be costly, making them inaccessible to a large portion of the population.",
+    color: "safety",
   },
 ];
 
 const Problem = () => {
   return (
-    <section id="problem" className="relative min-h-screen flex items-center py-20 md:py-32 overflow-hidden">
-      {/* Background elements */}
-      <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-background to-background" />
-      <motion.div
-        className="absolute top-1/2 left-0 w-[600px] h-[600px] rounded-full bg-accent-orange/10 blur-[150px]"
-        animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
-        transition={{ duration: 10, repeat: Infinity }}
-      />
-      <ParticleField count={20} />
-      <div className="absolute inset-0 noise-overlay" />
-
-      <div className="container mx-auto px-4 relative z-10">
+    <section id="problem" className="py-12 md:py-20 bg-gradient-to-b from-primary/5 to-background relative overflow-hidden">
+      <div className="container mx-auto px-4">
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16 md:mb-24"
+          transition={{ duration: 0.6 }}
+          className="text-center mb-8 md:mb-16"
         >
-          <motion.span
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="inline-block text-xs md:text-sm tracking-[0.3em] uppercase text-muted-foreground mb-4"
-          >
-            The Challenge
-          </motion.span>
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold mb-6">
-            The <span className="text-gradient">Problem</span>
-          </h2>
-          <p className="text-base md:text-xl text-muted-foreground max-w-2xl mx-auto">
-            Every day, <span className="text-accent-orange font-semibold">24,000 people die in India</span> due to late medical response.
+          <h2 className="text-2xl md:text-4xl lg:text-5xl font-heading font-bold mb-4 md:mb-6 px-4">The Problem</h2>
+          <p className="text-sm md:text-base lg:text-lg text-muted-foreground max-w-3xl mx-auto px-4">
+            Every day, <span className="text-safety font-bold">24,000 people die in India</span> due to late medical response. Moreover,
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
           {problems.map((problem, index) => (
             <motion.div
               key={problem.title}
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.15 }}
-              className="group relative"
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              whileHover={{ y: -8, scale: 1.02, transition: { duration: 0.2 } }}
+              whileTap={{ scale: 0.98 }}
+              className="bg-card rounded-xl md:rounded-2xl p-6 md:p-8 shadow-lg hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 border border-border"
             >
               <motion.div
-                whileHover={{ y: -8, scale: 1.02 }}
-                transition={{ duration: 0.3 }}
-                className="relative h-full glass rounded-3xl p-8 overflow-hidden"
+                whileHover={{ scale: 1.1, rotate: 5 }}
+                className={`w-12 h-12 md:w-16 md:h-16 rounded-2xl bg-${problem.color}/10 flex items-center justify-center mb-4 md:mb-6`}
               >
-                {/* Gradient border on hover */}
-                <div className={`absolute inset-0 rounded-3xl bg-gradient-to-br ${problem.gradient} opacity-0 group-hover:opacity-20 transition-opacity duration-500`} />
-                
-                {/* Icon */}
-                <motion.div
-                  whileHover={{ rotate: [0, -5, 5, 0] }}
-                  transition={{ duration: 0.5 }}
-                  className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${problem.gradient} flex items-center justify-center mb-6 shadow-lg`}
-                >
-                  <problem.icon className="w-8 h-8 text-white" />
-                </motion.div>
-
-                <h3 className="text-xl md:text-2xl font-heading font-bold mb-4 group-hover:text-gradient transition-all duration-300">
-                  {problem.title}
-                </h3>
-                <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
-                  {problem.description}
-                </p>
-
-                {/* Decorative corner */}
-                <div className={`absolute -bottom-20 -right-20 w-40 h-40 rounded-full bg-gradient-to-br ${problem.gradient} opacity-10 blur-2xl group-hover:opacity-20 transition-opacity`} />
+                <problem.icon className={`w-6 h-6 md:w-8 md:h-8 text-${problem.color}`} />
               </motion.div>
+
+              <h3 className="text-lg md:text-2xl font-heading font-bold mb-3 md:mb-4">{problem.title}</h3>
+              <p className="text-xs md:text-base text-muted-foreground leading-relaxed">{problem.description}</p>
             </motion.div>
           ))}
         </div>
